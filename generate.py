@@ -63,7 +63,6 @@ icons = {}
 # This script is cloned into an existing folder and should act on the parent folder instead
 
 # Open each file in the svg folder
-print(os.cwd())
 for filename in os.listdir(directory):
     # Ignore non-svg files
     if not filename.endswith('.svg'):
