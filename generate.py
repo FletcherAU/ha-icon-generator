@@ -58,20 +58,18 @@ window.customIcons = window.customIcons || {};
 window.customIcons["PREFIX"] = { getIcon, getIconList };"""
 
 
-
-# Get the path to the svg folder
-svg_folder = os.path.join(os.path.dirname(__file__), directory)
-
 icons = {}
 
+# This script is cloned into an existing folder and should act on the parent folder instead
+os.chdir('../')
+
 # Open each file in the svg folder
-for filename in os.listdir(f'../{svg_folder}'):
+for filename in os.listdir(directory):
     # Ignore non-svg files
     if not filename.endswith('.svg'):
         continue
-
     # Open the file
-    with open(os.path.join(svg_folder, filename), 'r') as f:
+    with open(os.path.join(directory, filename), 'r') as f:
         # Read the file
         svg = f.read()
 
