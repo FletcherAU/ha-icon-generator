@@ -61,7 +61,6 @@ window.customIcons["PREFIX"] = { getIcon, getIconList };"""
 icons = {}
 
 # This script is cloned into an existing folder and should act on the parent folder instead
-os.chdir('../')
 
 # Open each file in the svg folder
 print(os.cwd())
