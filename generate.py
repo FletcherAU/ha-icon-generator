@@ -64,6 +64,7 @@ icons = {}
 os.chdir('../')
 
 # Open each file in the svg folder
+print(os.cwd())
 for filename in os.listdir(directory):
     # Ignore non-svg files
     if not filename.endswith('.svg'):
