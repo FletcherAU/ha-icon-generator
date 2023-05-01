@@ -65,7 +65,7 @@ svg_folder = os.path.join(os.path.dirname(__file__), directory)
 icons = {}
 
 # Open each file in the svg folder
-for filename in os.listdir(svg_folder):
+for filename in os.listdir(f'../{svg_folder}'):
     # Ignore non-svg files
     if not filename.endswith('.svg'):
         continue
