@@ -4,6 +4,7 @@ import os
 import json
 import sys
 import xml.etree.ElementTree as ET
+from typing import Tuple
 
 if len(sys.argv) != 3:
     print("generate.py <directory> <prefix>")
@@ -13,7 +14,7 @@ else:
     directory = sys.argv[1]
 
 # Extract paths from svg
-def extract_data(svg):
+def extract_data(svg: str) -> Tuple[str, str]:
     root = ET.fromstring(svg)
 
     for child in root:
