@@ -3,6 +3,9 @@
 import os
 import json
 import sys
+from pprint import pprint
+from collections import defaultdict
+import xml.etree.ElementTree as ET
 
 if len(sys.argv) != 3:
     print("generate.py <directory> <prefix>")
@@ -13,22 +16,46 @@ else:
 
 from xml.dom import minidom
 
+# Convert XML
+def etree_to_dict(t):
+    d = {t.tag: {} if t.attrib else None}
+    children = list(t)
+    if children:
+        dd = defaultdict(list)
+        for dc in map(etree_to_dict, children):
+            for k, v in dc.items():
+                dd[k].append(v)
+        d = {t.tag: {k:v[0] if len(v) == 1 else v for k, v in dd.items()}}
+    if t.attrib:
+        d[t.tag].update(('@' + k, v) for k, v in t.attrib.items())
+    if t.text:
+        text = t.text.strip()
+        if children or t.attrib:
+            if text:
+              d[t.tag]['#text'] = text
+        else:
+            d[t.tag] = text
+    return d
+
 # Extract paths from svg
 def extract_data(svg):
-    # Parse the svg
-    doc = minidom.parseString(svg)
-    # Get the path elements
-    paths = doc.getElementsByTagName('path')[0].getAttribute('d')
+    root = ET.fromstring(svg)
 
-    # Get the path strings
-    #paths = [path.getAttribute('d') for path in paths]
-    #paths = paths[0].getAttribute('d')
+    for child in root:
+        if child.tag.split('}')[-1] == "g":
+            for child2 in child:
+                if 'd' in child2.attrib:
+                    path = child2.attrib['d']
+        elif child.tag.split('}')[-1] == "path":
+            if 'd' in child.attrib:
+                path = child.attrib['d']
 
-    viewbox = doc.childNodes[0].getAttribute('viewBox')
-    if not viewbox:
+    try:
+        viewbox = root.attrib['viewBox']
+    except:
         viewbox = "0 0 24.0 24.0"
 
-    return paths, viewbox
+    return path, viewbox
 
 js = """async function getIcon(name) {
   if (!(name in icons)) {
