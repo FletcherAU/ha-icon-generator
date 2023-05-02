@@ -17,7 +17,7 @@ jobs:
         with:
           repository: Perth-Artifactory/ha-icon-generator
           path: generator
-          ref: v0.1
+          ref: v0.2
       - uses: actions/setup-python@v4
         with:
           python-version: '3.x'

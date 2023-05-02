@@ -29,14 +29,14 @@ This will generate `<set name>-icons.json` which you can then copy to your Home 
 * Reference the file either in `configuration.yaml` or a lovelace config
 
 `configuration.yaml`
-```
+```yaml
 frontend:
   extra_module_url:
     - /local/af-icons.js
 ```
 
 lovelace
-```
+```yaml
 resources:
   - type: js
     url: /local/af-icons.js
