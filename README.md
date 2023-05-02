@@ -12,9 +12,9 @@ This script can either be used manually or configured via Github Actions.
 
 ### Manual
 
-`generate.py <svg directory> <icon prefix>`
+`generate.py <svg directory> <set name> <icon prefix>`
 
-This will generate `<icon prefix>-icons.json` which you can then copy to your Home Assistant installation.
+This will generate `<set name>-icons.json` which you can then copy to your Home Assistant installation.
 
 ### Github Actions
 

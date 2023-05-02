@@ -6,12 +6,13 @@ import sys
 import xml.etree.ElementTree as ET
 from typing import Tuple
 
-if len(sys.argv) != 3:
-    print("generate.py <directory> <prefix>")
+if len(sys.argv) != 4:
+    print("generate.py <directory> <set-name> <prefix>")
     sys.exit(1)
 else:
-    prefix = sys.argv[2]
+    prefix = sys.argv[3]
     directory = sys.argv[1]
+    set = sys.argv[2]
 
 # Extract paths from svg
 def extract_data(svg: str) -> Tuple[str, str]:
@@ -79,7 +80,7 @@ for filename in os.listdir(directory):
 
 s = json.dumps(icons, indent=4)
 
-with open(f"{prefix}-icons.js","w") as f:
+with open(f"{set}-icons.js","w") as f:
     f.write("var icons = ")
     f.write(s)
     f.write("\n")
