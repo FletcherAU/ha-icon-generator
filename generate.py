@@ -3,8 +3,6 @@
 import os
 import json
 import sys
-from pprint import pprint
-from collections import defaultdict
 import xml.etree.ElementTree as ET
 
 if len(sys.argv) != 3:
@@ -13,29 +11,6 @@ if len(sys.argv) != 3:
 else:
     prefix = sys.argv[2]
     directory = sys.argv[1]
-
-from xml.dom import minidom
-
-# Convert XML
-def etree_to_dict(t):
-    d = {t.tag: {} if t.attrib else None}
-    children = list(t)
-    if children:
-        dd = defaultdict(list)
-        for dc in map(etree_to_dict, children):
-            for k, v in dc.items():
-                dd[k].append(v)
-        d = {t.tag: {k:v[0] if len(v) == 1 else v for k, v in dd.items()}}
-    if t.attrib:
-        d[t.tag].update(('@' + k, v) for k, v in t.attrib.items())
-    if t.text:
-        text = t.text.strip()
-        if children or t.attrib:
-            if text:
-              d[t.tag]['#text'] = text
-        else:
-            d[t.tag] = text
-    return d
 
 # Extract paths from svg
 def extract_data(svg):
@@ -86,8 +61,6 @@ window.customIcons["PREFIX"] = { getIcon, getIconList };"""
 
 
 icons = {}
-
-# This script is cloned into an existing folder and should act on the parent folder instead
 
 # Open each file in the svg folder
 for filename in os.listdir(directory):
